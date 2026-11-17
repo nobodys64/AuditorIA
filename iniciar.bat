@@ -1,33 +1,36 @@
 @echo off
 cd /d "%~dp0"
-set HF_HOME=%~dp0modelos_cache
+title AuditorIA Universitaria
 
 echo ===================================================
-echo          AuditorIA - Sistema de Auditoria
+echo   AuditorIA Universitaria - Entorno Windows
 echo ===================================================
-echo.
 
-where python >nul 2>&1
+python --version
 if errorlevel 1 (
-    echo ERROR: Python no encontrado en PATH. Instale Python 3.10 o superior.
+    echo [ERROR] Python no esta instalado o no esta en el PATH.
     pause
     exit /b 1
 )
 
 if not exist "venv\Scripts\streamlit.exe" (
-    echo [AuditorIA] Creando entorno virtual...
+    echo Creando entorno virtual e instalando dependencias...
     python -m venv venv
-    echo [AuditorIA] Instalando dependencias (esto puede tardar varios minutos)...
-    venv\Scripts\pip.exe install --upgrade pip
-    venv\Scripts\pip.exe install -r requirements.txt
-    echo [AuditorIA] Instalacion completada.
-    echo.
+    if errorlevel 1 (
+        echo [ERROR] No se pudo crear el entorno virtual.
+        pause
+        exit /b 1
+    )
+    "venv\Scripts\python.exe" -m pip install --upgrade pip
+    "venv\Scripts\pip.exe" install -r requirements.txt
+    if errorlevel 1 (
+        echo [ERROR] Fallo la instalacion de requirements.txt.
+        pause
+        exit /b 1
+    )
 )
 
-echo Iniciando AuditorIA en http://localhost:8501
-echo Presione Ctrl+C en esta ventana para detener el servidor.
-echo.
-
-"venv\Scripts\streamlit.exe" run app.py --server.maxUploadSize 500 --browser.gatherUsageStats false
-
+set "HF_HOME=%~dp0modelos_cache"
+echo Iniciando servidor local en http://localhost:8501 ...
+"venv\Scripts\streamlit.exe" run app.py --browser.gatherUsageStats false
 pause
