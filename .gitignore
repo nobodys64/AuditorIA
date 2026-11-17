@@ -1,0 +1,43 @@
+﻿# Entornos virtuales (uno por SO)
+venv/
+venv_linux/
+venv_mac/
+
+# Cache de modelos Hugging Face (demasiado grande para GitHub)
+modelos_cache/
+
+# Cache de RapidOCR
+.RapidOCR/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporales de Office
+~$*.xlsx
+~$*.docx
+~$*.pptx
+
+# Variables de entorno
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+pruebas/
+test_*.py
